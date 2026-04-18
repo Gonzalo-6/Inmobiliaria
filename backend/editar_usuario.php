@@ -6,8 +6,13 @@ if ($_SESSION['tipo'] != 'admin') {
     header("Location: ../login.php");
     exit();
 }
+// VALIDAR ID
+if (!isset($_GET['id'])) {
+    header("Location: usuarios.php");
+    exit();
+}
 
-$id = $_GET['id'];
+$id = intval($_GET['id']);
 
 // GUARDAR CAMBIOS
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,11 +36,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // CARGAR DATOS
 $sql = "SELECT * FROM usuarios WHERE id=$id";
 $result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    echo "Usuario no encontrado";
+    exit();
+}
+
 $user = $result->fetch_assoc();
 ?>
 
 <h1>Editar usuario</h1>
-
+<a href="usuarios.php">← Volver</a><br><br>
 <form method="POST">
     Nombre: <input type="text" name="nombre" value="<?php echo $user['nombre']; ?>" required><br>
     Email: <input type="email" name="email" value="<?php echo $user['email']; ?>" required><br>

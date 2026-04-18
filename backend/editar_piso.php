@@ -6,6 +6,11 @@ if ($_SESSION['tipo'] != 'admin') {
     header("Location: ../login.php");
     exit();
 }
+// VALIDAR ID
+if (!isset($_GET['id'])) {
+    header("Location: pisos.php");
+    exit();
+}
 
 $id = $_GET['id'];
 
@@ -14,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $titulo = $_POST['titulo'];
     $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
+    $precio = floatval($_POST['precio']);;
     $ciudad = $_POST['ciudad'];
 
     $sql = "UPDATE pisos 
@@ -32,10 +37,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // CARGAR DATOS
 $sql = "SELECT * FROM pisos WHERE id=$id";
 $result = $conn->query($sql);
+
+if ($result->num_rows == 0) {
+    echo "Piso no encontrado";
+    exit();
+}
+
 $piso = $result->fetch_assoc();
 ?>
 
 <h1>Editar piso</h1>
+<a href="pisos.php">← Volver</a><br><br>
+
 <form method="POST">
     Titulo: <input type="text" name="titulo" value="<?php echo $piso['titulo']; ?>" required><br>
     Descripción: <textarea name="descripcion"><?php echo $piso['descripcion']; ?></textarea><br>
