@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+/* CONTENEDOR GENERAL */
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+/* GRID DE PISOS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* TARJETA */
+.card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* IMAGEN */
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* CONTENIDO */
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    margin: 0;
+}
+
+.card-content p {
+    color: #555;
+}
+
+/* PRECIO */
+.precio {
+    font-weight: bold;
+    color: green;
+}
+
+/* BOTÓN */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}

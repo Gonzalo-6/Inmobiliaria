@@ -16,8 +16,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ciudad = $_POST['ciudad'];
     $id_vendedor = $_SESSION['id'];
 
-    $sql = "INSERT INTO pisos (titulo, descripcion, precio, ciudad, id_vendedor)
-            VALUES ('$titulo', '$descripcion', '$precio', '$ciudad', '$id_vendedor')";
+    // 🖼️ SUBIR IMAGEN
+    $imagen_nombre = "";
+
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['name'] != "") {
+        $imagen_nombre = time() . "_" . $_FILES['imagen']['name'];
+        move_uploaded_file($_FILES['imagen']['tmp_name'], "../uploads/" . $imagen_nombre);
+    }
+
+    // 🔥 INSERT CON IMAGEN
+    $sql = "INSERT INTO pisos (titulo, descripcion, precio, ciudad, id_vendedor, imagen)
+            VALUES ('$titulo', '$descripcion', '$precio', '$ciudad', '$id_vendedor', '$imagen_nombre')";
 
     if ($conn->query($sql)) {
         header("Location: home.php");
@@ -30,11 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h1>Publicar piso</h1>
 
-<form method="POST">
+<!-- 🔥 IMPORTANTE: enctype -->
+<form method="POST" enctype="multipart/form-data">
     Titulo: <input type="text" name="titulo" required><br>
     Descripción: <textarea name="descripcion"></textarea><br>
     Precio: <input type="number" name="precio" required><br>
-    Ciudad: <input type="text" name="ciudad" required><br><br>
+    Ciudad: <input type="text" name="ciudad" required><br>
+
+    Imagen: <input type="file" name="imagen"><br><br>
 
     <button type="submit">Publicar</button>
 </form>

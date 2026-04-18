@@ -2,7 +2,7 @@
 session_start();
 include("../includes/db.php");
 
-// 🔒 Solo vendedores
+// Solo vendedores
 if (!isset($_SESSION['id']) || $_SESSION['tipo'] != 'vendedor') {
     header("Location: ../login.php");
     exit();
@@ -10,28 +10,47 @@ if (!isset($_SESSION['id']) || $_SESSION['tipo'] != 'vendedor') {
 
 $id_vendedor = $_SESSION['id'];
 
-// 🔥 CONSULTA CORRECTA
 $sql = "SELECT * FROM pisos WHERE id_vendedor = $id_vendedor";
 $result = $conn->query($sql);
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis pisos</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
 <h1>Mis pisos</h1>
 
 <a href="home.php">← Volver</a>
+
 <hr>
+
+<div class="container">
+    <div class="grid">
 
 <?php
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
 ?>
 
-    <div style="border:1px solid black; margin:10px; padding:10px;">
-        <h3><?php echo $row['titulo']; ?></h3>
-        <p><?php echo $row['descripcion']; ?></p>
-        <p><strong>Precio:</strong> <?php echo $row['precio']; ?> €</p>
-        <p><strong>Ciudad:</strong> <?php echo $row['ciudad']; ?></p>
-        <p><strong>Vendido:</strong> <?php echo $row['vendido'] ? 'Sí' : 'No'; ?></p>
-    </div>
+        <div class="card">
+            <img src="../uploads/<?php echo $row['imagen'] ?: 'default.jpg'; ?>">
+
+            <div class="card-content">
+                <h3><?php echo $row['titulo']; ?></h3>
+
+                <p><?php echo substr($row['descripcion'], 0, 100); ?>...</p>
+
+                <p class="precio"><?php echo $row['precio']; ?> €</p>
+
+                <p><?php echo $row['ciudad']; ?></p>
+
+                <p><strong>Vendido:</strong> <?php echo $row['vendido'] ? 'Sí' : 'No'; ?></p>
+            </div>
+        </div>
 
 <?php
     }
@@ -39,3 +58,9 @@ if ($result->num_rows > 0) {
     echo "No tienes pisos publicados";
 }
 ?>
+
+    </div>
+</div>
+
+</body>
+</html>
