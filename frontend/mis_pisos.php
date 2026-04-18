@@ -37,6 +37,7 @@ if ($result->num_rows > 0) {
 ?>
 
         <div class="card">
+
             <img src="../uploads/<?php echo $row['imagen'] ?: 'default.jpg'; ?>">
 
             <div class="card-content">
@@ -49,6 +50,9 @@ if ($result->num_rows > 0) {
                 <p><?php echo $row['ciudad']; ?></p>
 
                 <p><strong>Vendido:</strong> <?php echo $row['vendido'] ? 'Sí' : 'No'; ?></p>
+
+                <a href="editar_piso.php?id=<?php echo $row['id']; ?>">Editar</a> |
+                <a href="eliminar_piso.php?id=<?php echo $row['id']; ?>">Eliminar</a>
             </div>
         </div>
 

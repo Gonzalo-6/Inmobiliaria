@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ciudad = $_POST['ciudad'];
     $id_vendedor = $_SESSION['id'];
 
-    // 🖼️ SUBIR IMAGEN
+    // SUBIR IMAGEN
     $imagen_nombre = "";
 
     if (isset($_FILES['imagen']) && $_FILES['imagen']['name'] != "") {
@@ -24,7 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         move_uploaded_file($_FILES['imagen']['tmp_name'], "../uploads/" . $imagen_nombre);
     }
 
-    // 🔥 INSERT CON IMAGEN
+ $imagen_nombre = "";
+
+if (isset($_FILES['imagen']) && $_FILES['imagen']['name'] != "") {
+
+    $imagen_nombre = time() . "_" . $_FILES['imagen']['name'];
+
+    move_uploaded_file(
+        $_FILES['imagen']['tmp_name'],
+        "../uploads/" . $imagen_nombre
+    );
+}
     $sql = "INSERT INTO pisos (titulo, descripcion, precio, ciudad, id_vendedor, imagen)
             VALUES ('$titulo', '$descripcion', '$precio', '$ciudad', '$id_vendedor', '$imagen_nombre')";
 
@@ -39,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h1>Publicar piso</h1>
 
-<!-- 🔥 IMPORTANTE: enctype -->
+
 <form method="POST" enctype="multipart/form-data">
     Titulo: <input type="text" name="titulo" required><br>
     Descripción: <textarea name="descripcion"></textarea><br>
