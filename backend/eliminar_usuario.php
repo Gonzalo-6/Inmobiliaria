@@ -24,6 +24,10 @@ if ($result->num_rows == 0) {
     exit();
 }
 
+if ($id == $_SESSION['id']) {
+    echo "No puedes eliminar tu propio usuario";
+    exit();
+}
 
 $sql = "DELETE FROM usuarios WHERE id=$id";
 

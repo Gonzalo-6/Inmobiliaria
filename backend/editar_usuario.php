@@ -46,6 +46,7 @@ $user = $result->fetch_assoc();
 
 <h1>Editar usuario</h1>
 <a href="usuarios.php">← Volver</a><br><br>
+
 <form method="POST">
     Nombre: <input type="text" name="nombre" value="<?php echo $user['nombre']; ?>" required><br>
     Email: <input type="email" name="email" value="<?php echo $user['email']; ?>" required><br>
