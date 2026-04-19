@@ -2,7 +2,7 @@
 session_start();
 include("../includes/db.php");
 
-//  Solo compradores pueden comprar
+//  Solo compradores
 if (!isset($_SESSION['id']) || $_SESSION['tipo'] != 'comprador') {
     header("Location: ../login.php");
     exit();
@@ -15,8 +15,9 @@ if (!isset($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
+$id_comprador = $_SESSION['id'];
 
-//  Comprobar que el piso existe y no está vendido
+// 🔍 Comprobar disponibilidad
 $sql_check = "SELECT * FROM pisos WHERE id=$id AND vendido=0";
 $result = $conn->query($sql_check);
 
@@ -25,12 +26,14 @@ if ($result->num_rows == 0) {
     exit();
 }
 
-//  Marcar como vendido
-$sql = "UPDATE pisos SET vendido=1 WHERE id=$id";
+//  Comprar piso
+$sql = "UPDATE pisos 
+        SET vendido=1, comprador_id=$id_comprador 
+        WHERE id=$id";
 
 if ($conn->query($sql)) {
-    header("Location: ver_pisos.php");
-    exit();
+    echo "✅ Compra realizada correctamente";
+    echo "<br><a href='ver_pisos.php'>Volver</a>";
 } else {
     echo "❌ Error al comprar";
 }

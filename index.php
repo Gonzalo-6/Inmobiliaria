@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 ?>
 
         <div class="card">
-            <img src="uploads/<?php echo $row['imagen'] ?: 'default.jpg'; ?>">
+            <img src="uploads/<?php echo $row['imagen'] ? $row['imagen'] : 'default.jpg'; ?>">
 
             <div class="card-content">
                 <h3><?php echo $row['titulo']; ?></h3>
