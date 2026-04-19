@@ -47,8 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h2>Login</h2>
 
-<h2>Login</h2>
-
 <a href="index.php">🏠 Inicio</a> |
 <a href="frontend/registro.php">Registro</a>
 
