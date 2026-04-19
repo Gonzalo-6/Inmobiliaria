@@ -32,18 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descripcion = $_POST['descripcion'];
     $precio = $_POST['precio'];
     $ciudad = $_POST['ciudad'];
-
-    // 🔥 IMAGEN (opcional)
     $imagen_nombre = $piso['imagen'];
 
     if (isset($_FILES['imagen']) && $_FILES['imagen']['name'] != "") {
 
         $imagen_nombre = time() . "_" . $_FILES['imagen']['name'];
 
-        move_uploaded_file(
+        if (move_uploaded_file(
             $_FILES['imagen']['tmp_name'],
             "../uploads/" . $imagen_nombre
-        );
+        )) {
+            echo "✅ Imagen subida correctamente";
+        } else {
+            echo "❌ Error al subir imagen";
+        }
     }
 
     $sql = "UPDATE pisos 
@@ -72,7 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     Ciudad: <input type="text" name="ciudad" value="<?php echo $piso['ciudad']; ?>" required><br>
 
     Imagen actual:<br>
-    <img src="../uploads/<?php echo $piso['imagen']; ?>" width="150"><br><br>
+   <?php if ($piso['imagen']) { ?>
+    <img src="../uploads/<?php echo $piso['imagen']; ?>" width="150">
+<?php } else { ?>
+    <p>Sin imagen</p>
+<?php } ?><br><br>
 
     Nueva imagen: <input type="file" name="imagen"><br><br>
 
