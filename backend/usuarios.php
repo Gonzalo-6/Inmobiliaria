@@ -13,6 +13,9 @@ $result = $conn->query($sql);
 
 <h1>Lista de usuarios</h1>
 
+<a href="admin.php" style="display:inline-block; margin-bottom:10px;">
+    ← Volver al panel
+</a>
 <a href="crear_usuario.php">➕ Crear usuario</a>
 <br><br>
 
